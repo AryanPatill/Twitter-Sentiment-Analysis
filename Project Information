@@ -1,0 +1,130 @@
+## Table Of Contents
+
+* Importing dependencies
+* Importing dataset
+* Preprocessing Text
+* Analysing data
+* Splitting data
+* TF-IDF Vectoriser
+* Transforming Dataset
+* Creating and Evaluating Models
+      * BernoulliNB Model
+      * LinearSVC Model
+      * Logistic Regression Model
+* Saving the Models
+* Using the Model
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+🌟Importing dataset
+
+The dataset being used is the sentiment140 dataset. It contains 1,600,000 tweets extracted using the Twitter API. The tweets have been 
+annotated (0 = Negative, 4 = Positive) and they can be used to detect sentiment.
+
+[The training data isn't perfectly categorized as it has been created by tagging the text according to the emoji present. So, 
+any model built using this dataset may have lower than expected accuracy since the dataset isn't perfectly categorized.]
+
+It contains the following 6 fields:
+
+sentiment: the polarity of the tweet (0 = negative, 4 = positive)
+ids: The id of the tweet (2087)
+date: the date of the tweet (Sat May 16 23:58:44 UTC 2009)
+flag: The query (lynx). If there is no query, then this value is NO_QUERY.
+user: the user that tweeted (robotickilldozr)
+text: the text of the tweet (Lyx is cool)
+We require only the sentiment and text fields, so we discard the rest.
+
+Furthermore, we're changing the sentiment field so that it has new values to reflect the sentiment. (0 = Negative, 1 = Positive)
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+🌟Preprocess Text
+
+Text Preprocessing is traditionally an important step for Natural Language Processing (NLP) tasks. It transforms text into a more digestible form so that 
+machine learning algorithms can perform better.
+
+The Preprocessing steps taken are:
+
+Lower Casing: Each text is converted to lowercase.
+Replacing URLs: Links starting with "HTTP" "https" or "www" are replaced by "URL".
+Replacing Emojis: Replace emojis by using a pre-defined dictionary containing emojis along with their meaning. (eg: ":)" to "EMOJIsmile")
+Replacing Usernames: Replace @Usernames with the word "USER". (eg: "@Kaggle" to "USER")
+Removing Non-Alphabets: Replacing characters except Digits and Alphabets with a space.
+Removing Consecutive Letters: 3 or more consecutive letters are replaced by 2 letters. (eg: "Hey" to "Heyy")
+Removing Short Words: Words with a length of less than 2 are removed.
+Removing Stopwords: Stopwords are English words which does not add much meaning to a sentence. They can safely be ignored without 
+sacrificing the meaning of the sentence. (eg: "the", "he", "have")
+Lemmatizing: Lemmatization is the process of converting a word to its base form. (e.g: “Great” to “Good”)
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+🌟Analyzing the data
+
+Now we're going to analyze the preprocessed data to get an understanding of it. 
+We'll plot Word Clouds for Positive and Negative tweets from our dataset and see which words occur the most.
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+🌟Splitting the Data
+The Preprocessed Data is divided into 2 sets of data:
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+🌟Training Data: The dataset upon which the model would be trained. Contains 95% data.
+🌟Test Data: The dataset upon which the model would be tested against. Contains 5% data
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+🌟TF-IDF Vectoriser
+TF-IDF indicates what the importance of the word is to understand the document or dataset. Let us understand with an example. Suppose you have a dataset where students 
+write an essay on the topic, My House. In this dataset, the word a appears many times; it’s a high-frequency word compared to other words in the dataset. 
+The dataset contains other words like home, house, rooms and so on that appear less often, so their frequency is lower and they carry more information compared to the word.
+This is the intuition behind TF-IDF.
+
+TF-IDF Vectoriser converts a collection of raw documents to a matrix of TF-IDF features. The Vectoriser is usually trained on only the X_train dataset.
+
+ngram_range is the range of number of words in a sequence. [e.g "very expensive" is a 2-gram that is considered as an extra feature separately from "very" and "expensive" when you 
+have a n-gram range of (1,2)]
+
+max_features specifies the number of features to consider. [Ordered by feature frequency across the corpus].
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+🌟Transforming the dataset
+Transforming the X_train and X_test dataset into the matrix of TF-IDF Features by using the TF-IDF Vectoriser. This dataset will be used to train the model and test against it.
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+🌟Creating and Evaluating Models
+
+We're creating 3 different types of models for our sentiment analysis problem:
+Bernoulli Naive Bayes (BernoulliNB)
+Linear Support Vector Classification (LinearSVC)
+Logistic Regression (LR)
+Since our dataset is not skewed, i.e. it has an equal number of Positive and Negative Predictions. We're choosing Accuracy as our evaluation metric. Furthermore,
+we're plotting the Confusion Matrix to get an understanding of how our model is performing on both classification types.
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+🌟Saving the Models
+
+We're using PICKLE to save Vectoriser and BernoulliNB, Logistic Regression Model for later use.
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+🌟Using the Model.
+
+To use the model for Sentiment Prediction we need to import the Vectoriser and LR Model using Pickle.
+The vectorizer can be used to transform data into a matrix of TF-IDF Features. While the model can be used to predict the sentiment of the transformed Data.
+The text whose sentiment has to be predicted however must be preprocessed.
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
