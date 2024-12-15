@@ -31,5 +31,5 @@ In this notebook, we'll develop a Sentiment Analysis model to categorize a tweet
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 📞 Contact Information
 
-GitHub: 0BuLLeT0
+GitHub: AryanPatill
 Twitter: @Bulletgaming0
